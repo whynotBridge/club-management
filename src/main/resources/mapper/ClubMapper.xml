@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubmanagement.mapper.ClubMapper">
+    <update id="updateClub" parameterType="Club">
+        update club
+        <set>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="contactInfo != null and contactInfo != ''">
+                contact_info = #{contactInfo},
+            </if>
+            <if test="activitySpace != null and activitySpace != ''">
+                activity_space = #{activitySpace}
+            </if>
+        </set>
+        where club_id = #{clubId}
+    </update>
+</mapper>

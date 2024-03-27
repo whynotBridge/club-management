@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: club-management
+  profiles:
+    active: dev
+  datasource:
+    druid:
+      driver-class-name: ${club-management.datasource.driver-class-name}
+      url: jdbc:mysql://${club-management.datasource.host}:${club-management.datasource.port}/${club-management.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${club-management.datasource.username}
+      password: ${club-management.datasource.password}
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.clubmanagement.model.pojos
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
