@@ -35,12 +35,7 @@ public class WebFilterConfig implements Filter{
 
         //定义不需要处理的请求路径
         String[] urls = new String[]{
-//                "/employee/login",
-//                "/employee/logout",
-//                "/backend/**",
-//                "/front/**",
-//                "/common/**",
-//                "/user/sendMsg",
+                "/activities/*",
                 "/user/login",
                 "/doc.html",
                 "/webjars/**",
