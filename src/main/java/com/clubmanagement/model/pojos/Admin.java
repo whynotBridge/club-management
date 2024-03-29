@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int userId;
+    private int AdminId;
 
     private String username;
 

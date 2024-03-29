@@ -5,7 +5,7 @@ package com.clubmanagement.controller;
 
 import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
-import com.clubmanagement.model.Enums.PositionEnum;
+import com.clubmanagement.model.enums.PositionEnum;
 import com.clubmanagement.model.pojos.Member;
 import com.clubmanagement.service.MemberService;
 import io.swagger.annotations.Api;
@@ -24,12 +24,13 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    @GetMapping()
+    @GetMapping("/{clubId}")
     @ApiOperation("社长获取成员信息")
-    public Result<List<Member>> getByClubId() {
-        //根据session中的userId获取clubId
-        int userId=Context.getCurrentSession().getUserId();
-        int clubId = memberService.getClubIdByUserId(userId);
+    public Result<List<Member>> getByClubId(@PathVariable int clubId) {
+        //更新后直接传id
+//        //根据session中的userId获取clubId
+//        int userId=Context.getCurrentSession().getId();
+//        int clubId = memberService.getOnlyClubIdByUId(userId, PositionEnum.president);
 
         List<Member> members = memberService.getByClubId(clubId);
         return Result.success(members);
@@ -39,7 +40,7 @@ public class MemberController {
     @ApiOperation("用户加入社团")
     public Result joinClub(@PathVariable int clubId) {
         //根据session中的userId获取用户id
-        int userId = Context.getCurrentSession().getUserId();
+        int userId = Context.getCurrentSession().getId();
         Member member=Member.builder().userId(userId).clubId(clubId)
                 .position(PositionEnum.applyJoin)   //申请加入
                 .joinDate(LocalDateTime.now())
@@ -54,7 +55,7 @@ public class MemberController {
     public Result quitClub(@PathVariable int clubId) {
 //        Long userId = Context
         //根据session获得userId
-        int userId = Context.getCurrentSession().getUserId();
+        int userId = Context.getCurrentSession().getId();
         //根据userId获取memberId
         int memberId =memberService.getMemberIdByUserId(userId);
 

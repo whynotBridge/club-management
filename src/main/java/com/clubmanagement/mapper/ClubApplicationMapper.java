@@ -1,7 +1,7 @@
 package com.clubmanagement.mapper;
 
 
-import com.clubmanagement.model.Enums.ApplyStatusEnum;
+import com.clubmanagement.model.enums.ApplyStatusEnum;
 import com.clubmanagement.model.pojos.ClubApplication;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clubmanagement.mapper.MemberMapper">
-
-    <select id="getClubIdByUserId" resultType="int">
-         select ifnull((select club_id from member where user_id = #{userId}),-1)
-    </select>
-</mapper>

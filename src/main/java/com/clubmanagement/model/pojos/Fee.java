@@ -1,6 +1,6 @@
 package com.clubmanagement.model.pojos;
 
-import com.clubmanagement.model.Enums.PayStatusEnum;
+import com.clubmanagement.model.enums.PayStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

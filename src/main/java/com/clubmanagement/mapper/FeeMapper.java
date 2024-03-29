@@ -2,13 +2,10 @@ package com.clubmanagement.mapper;
 
 
 
-import com.clubmanagement.model.Enums.PayStatusEnum;
+import com.clubmanagement.model.enums.PayStatusEnum;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
-
-
-import java.util.List;
 
 @Mapper
 public interface FeeMapper {

@@ -4,17 +4,20 @@ import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.ActivityParticipationMapper;
 import com.clubmanagement.mapper.ClubMapper;
-import com.clubmanagement.model.Enums.PayStatusEnum;
+import com.clubmanagement.model.dtos.ActivityParticipationDTO;
+import com.clubmanagement.model.enums.PayStatusEnum;
 import com.clubmanagement.model.pojos.Activity;
 import com.clubmanagement.model.pojos.ActivityParticipation;
 import com.clubmanagement.service.ActivityService;
 import com.clubmanagement.service.FeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,7 +40,7 @@ public class ActivityController {
     @ApiOperation("社长发布活动")
     public Result<?> addActivity(@RequestBody Activity activity){
         //根据session获得userId
-        int userId= Context.getCurrentSession().getUserId();
+        int userId= Context.getCurrentSession().getId();
         //根据社长id获取社团id
         int clubId=clubMapper.getCIdByPId(userId);
         //设置活动所属社团
@@ -62,7 +65,7 @@ public class ActivityController {
     @Transactional
     public Result<?> joinActivity(@PathVariable int activityId){
         //根据session获得userId和username
-        int userId=Context.getCurrentSession().getUserId();
+        int userId=Context.getCurrentSession().getId();
         String userName=Context.getCurrentSession().getUserName();
 
         //根据活动id获取活动信息的amout
@@ -83,23 +86,42 @@ public class ActivityController {
         return Result.success("参加活动成功");
     }
 
-    @GetMapping("/getMyParticipation}")
+    @GetMapping("/getMyParticipation")
     @ApiOperation("获取我参与的活动")
     public Result<?> getMyParticipation(){
         //根据session获得userId
-        int userId=Context.getCurrentSession().getUserId();
+        int userId=Context.getCurrentSession().getId();
         List<ActivityParticipation> activityParticipations=activityParticipationMapper.getParticipationByUId(userId);
         if(activityParticipations==null || activityParticipations.size()==0)
             return Result.fail("您还没有参加任何活动");
 
-        return Result.success(activityParticipations);
+        List<ActivityParticipationDTO> res=new ArrayList<>();
+        //拼接完整活动信息
+        for(ActivityParticipation ap:activityParticipations){
+            //根据活动id获取活动信息
+            Activity activity=activityService.getActivityById(ap.getActivityId());
+
+
+            //先传活动报名信息
+            ActivityParticipationDTO activityParticipationDTO=ActivityParticipationDTO.builder()
+                    .userId(ap.getUserId())
+                    .userName(ap.getUserName())
+                    .isSigned(ap.isSigned())
+                    .build();
+
+            //再传活动信息
+            BeanUtils.copyProperties(activity,activityParticipationDTO);
+            res.add(activityParticipationDTO);
+        }
+
+        return Result.success(res);
     }
 
     @PostMapping("/sign/{activityId}")
     @ApiOperation("用户签到")
     public Result<?> sign(@PathVariable int activityId){
         //根据session获得userId
-        int userId=Context.getCurrentSession().getUserId();
+        int userId=Context.getCurrentSession().getId();
 
         //懒得加测试数据，先注释掉
 //        //先根据id获取Activity信息
@@ -124,7 +146,7 @@ public class ActivityController {
     @ApiOperation("用户缴费")
     public Result<?> pay(@PathVariable int activityId){
         //根据session获得userId
-        int userId=Context.getCurrentSession().getUserId();
+        int userId=Context.getCurrentSession().getId();
         //根据用户id和活动id更新缴费状态
         feeService.PayFee(activityId,userId,PayStatusEnum.Paid);
         return Result.success("缴费成功");

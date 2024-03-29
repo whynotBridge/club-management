@@ -1,6 +1,7 @@
 package com.clubmanagement.mapper;
 
 
+import com.clubmanagement.model.enums.PositionEnum;
 import com.clubmanagement.model.pojos.Member;
 import org.apache.ibatis.annotations.*;
 
@@ -21,8 +22,12 @@ public interface MemberMapper {
     @Delete("delete from member where position = 'alreadyQuit'")
     void deleteQuitMembers();
 
-    int getClubIdByUserId(int userid);
+    @Select("select distinct club_id from member where user_id = #{userid}")
+    int[] getClubIdByUserId(int userid);
 
     @Select("select member_id from member where user_id = #{userId}")
     int getMemberIdByUserId(int userId);
+
+    @Select("select club_id from member where user_id = #{userId} and position = #{position}")
+    int[] getOnlyClubIdByUId(int userId, PositionEnum position);
 }

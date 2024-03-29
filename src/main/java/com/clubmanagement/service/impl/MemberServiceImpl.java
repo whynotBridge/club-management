@@ -1,11 +1,13 @@
 package com.clubmanagement.service.impl;
 
 import com.clubmanagement.mapper.MemberMapper;
+import com.clubmanagement.model.enums.PositionEnum;
 import com.clubmanagement.model.pojos.Member;
 import com.clubmanagement.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,11 +33,15 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.deleteQuitMembers();
     }
 
-    public int getClubIdByUserId(int userid){
+    public int[] getClubIdByUserId(int userid){
         return memberMapper.getClubIdByUserId(userid);
     }
 
     public int getMemberIdByUserId(int userId){
         return memberMapper.getMemberIdByUserId(userId);
     }
+
+//    public int[] getOnlyClubIdByUId(int userId, PositionEnum position){
+//        return memberMapper.getOnlyClubIdByUId(userId, position);
+//    }
 }

@@ -1,4 +1,4 @@
-package com.clubmanagement.model.Enums;
+package com.clubmanagement.model.enums;
 
 public enum PayStatusEnum {
     Pending,

@@ -4,7 +4,7 @@ import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
 
 import com.clubmanagement.mapper.ClubApplicationMapper;
-import com.clubmanagement.model.Enums.ApplyStatusEnum;
+import com.clubmanagement.model.enums.ApplyStatusEnum;
 import com.clubmanagement.model.dtos.ClubApplicationDTO;
 import com.clubmanagement.model.dtos.UpdateClubDTO;
 import com.clubmanagement.model.pojos.Club;
@@ -16,9 +16,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = "社团管理")
@@ -48,16 +48,18 @@ public class ClubController {
     }
 
     //社长可以修改社团信息，包括社团简介、联系方式、活动场地等
-    @PutMapping()
+    @PutMapping("/{clubId}")
     @ApiOperation("社长修改社团信息")
-    public Result<?> updateClub(@RequestBody UpdateClubDTO updateClubDTO) {
+    public Result<?> updateClub(@PathVariable int clubId,@RequestBody UpdateClubDTO updateClubDTO) {
         log.info("updateClubDTO,{}",updateClubDTO);
-        //先根据session中的userId（社长）获取社团
-        int userId = Context.getCurrentSession().getUserId();
-        log.info("当前登录用户的id：{}", userId);
-        //根据社长id获得社团id
-        int clubId=clubService.selectClubIdByPId(userId);
-        log.info("clubId,{}",clubId);
+
+        //更改后参数以及穿了cid
+//        //先根据session中的userId（社长）获取社团
+//        int userId = Context.getCurrentSession().getId();
+//        log.info("当前登录用户的id：{}", userId);
+//        //根据社长id获得社团id
+//        int clubId=clubService.selectClubIdByPId(userId);
+//        log.info("clubId,{}",clubId);
 
         Club club=Club.builder().clubId(clubId)
                 .description(updateClubDTO.getDescription())
@@ -71,19 +73,22 @@ public class ClubController {
 
     @GetMapping("/myclub")
     @ApiOperation("获取当前登录用户的社团信息")
-    public Result<Club> getMyClub() {
+    public Result<List<Club>> getMyClub() {
         //先根据session中的userId（社长）获取社团
-        int userId = Context.getCurrentSession().getUserId();
+        int userId = Context.getCurrentSession().getId();
 
         //根据userid获得clubid
-        int clubId= memberService.getClubIdByUserId(userId);
-        if(clubId==-1)
+        int[] clubIds= memberService.getClubIdByUserId(userId);
+        if(clubIds==null)
             return Result.fail("你还没有加入任何社团");
 
-        Club club=clubService.getById(clubId);
+        List<Club> clubs=new ArrayList<>();
+        for(int id:clubIds){
+            Club club=clubService.getById(id);
+            clubs.add(club);
+        }
 
-
-        return Result.success(club);
+        return Result.success(clubs);
     }
 
     @PostMapping
@@ -92,7 +97,7 @@ public class ClubController {
         ClubApplication clubApplication = new ClubApplication();
         BeanUtils.copyProperties(clubApplicationDTO, clubApplication);
         //根据session中的userId（社长）
-        int userId = Context.getCurrentSession().getUserId();
+        int userId = Context.getCurrentSession().getId();
         clubApplication.setPresidentId(userId);
         clubApplication.setStatus(ApplyStatusEnum.apply);
 

@@ -1,7 +1,7 @@
 package com.clubmanagement.service;
 
 
-import com.clubmanagement.model.Enums.PayStatusEnum;
+import com.clubmanagement.model.enums.PayStatusEnum;
 
 public interface FeeService {
 
