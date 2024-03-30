@@ -1,6 +1,6 @@
 package com.clubmanagement.service;
 
-import com.clubmanagement.model.dtos.QueryMyclubDTO;
+import com.clubmanagement.model.dtos.QueryClubDTO;
 import com.clubmanagement.model.pojos.Club;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public interface ClubService {
      * 获取所有未加入的社团信息
      * @return
      */
-    List<Club> getAllClubs();
+    List<QueryClubDTO> getAllClubs();
 
     Club selectClubByPId(int userId);
 
@@ -26,5 +26,5 @@ public interface ClubService {
      * 获取当前登录用户的社团信息
      * @return
      */
-    List<QueryMyclubDTO> getMyclub();
+    List<QueryClubDTO> getMyclub();
 }

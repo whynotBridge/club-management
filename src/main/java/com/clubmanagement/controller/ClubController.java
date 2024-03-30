@@ -4,7 +4,7 @@ import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
 
 import com.clubmanagement.mapper.ClubApplicationMapper;
-import com.clubmanagement.model.dtos.QueryMyclubDTO;
+import com.clubmanagement.model.dtos.QueryClubDTO;
 import com.clubmanagement.model.enums.ApplyStatusEnum;
 import com.clubmanagement.model.dtos.ClubApplicationDTO;
 import com.clubmanagement.model.dtos.UpdateClubDTO;
@@ -19,7 +19,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = "社团管理")
@@ -38,9 +37,9 @@ public class ClubController {
 
 
     @GetMapping
-    @ApiOperation("获取所有未申请加入社团信息")
-    public Result<List<Club>> getAllClubs() {
-        List<Club> clubs = clubService.getAllClubs();
+    @ApiOperation("获取所有社团信息")
+    public Result<List<QueryClubDTO>> getAllClubs() {
+        List<QueryClubDTO> clubs = clubService.getAllClubs();
 
         if(clubs == null || clubs.size() == 0)
                 return Result.fail("没有社团信息");
@@ -74,8 +73,8 @@ public class ClubController {
 
     @GetMapping("/myclub")
     @ApiOperation("获取当前登录用户的社团信息")
-    public Result<List<QueryMyclubDTO>> getMyClub() {
-        List<QueryMyclubDTO> myclubsDTO=clubService.getMyclub();
+    public Result<List<QueryClubDTO>> getMyClub() {
+        List<QueryClubDTO> myclubsDTO=clubService.getMyclub();
         if(myclubsDTO==null)
             return Result.fail("您暂无加入任何社团");
         return Result.success(myclubsDTO);

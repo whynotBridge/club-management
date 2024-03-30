@@ -78,5 +78,6 @@ public interface MemberMapper {
      * @param clubId
      * @return
      */
+    @Select("select * from member where user_id=#{userId} and club_id=#{clubId}")
     Member getByUIdAndCId(int userId, int clubId);
 }

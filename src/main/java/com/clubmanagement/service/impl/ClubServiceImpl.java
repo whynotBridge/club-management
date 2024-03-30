@@ -1,10 +1,9 @@
 package com.clubmanagement.service.impl;
 
 import com.clubmanagement.commom.Context;
-import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.ClubMapper;
 import com.clubmanagement.mapper.MemberMapper;
-import com.clubmanagement.model.dtos.QueryMyclubDTO;
+import com.clubmanagement.model.dtos.QueryClubDTO;
 import com.clubmanagement.model.pojos.Club;
 import com.clubmanagement.model.pojos.Member;
 import com.clubmanagement.service.ClubService;
@@ -28,26 +27,33 @@ public class ClubServiceImpl implements ClubService {
      * 获取所有未加入的社团信息
      * @return
      */
-    public List<Club> getAllClubs(){
-        //思路是查询所有，如果在member表中也有记录的，不返回，因为我要申请加入
+    public List<QueryClubDTO> getAllClubs(){
+        //思路是查询所有，如果在member表中也有记录的，返回职位，没有则职位为null
 
         //先查询所有社团信息
         List<Club> clubs=clubMapper.getAllClubs();
 
         //构造返回列表
-        List<Club> res=new ArrayList<>();
+        List<QueryClubDTO> res=new ArrayList<>();
         int userId=Context.getCurrentSession().getId(); //获取当前登入用户id
 
         //遍历查询到的社团
         for(Club club:clubs){
+            //拼接club信息
+            QueryClubDTO queryClubDTO = new QueryClubDTO();
+            BeanUtils.copyProperties(club,queryClubDTO);
+
             //根据用户id和社团id获取成员信息
             Member member=memberMapper.getByUIdAndCId(userId,club.getClubId());
-            //如果不为空，说明存在，则这个社团已经加入了，跳过
-            if(member!=null)
-                continue;
+            //如果不为空，说明存在，则这个社团已经加入了，设置职位
+            if(member!=null){
+                queryClubDTO.setPosition(member.getPosition());
+            }else{
+                queryClubDTO.setPosition(null);
+            }
 
-            //如果不存在，要返回
-            res.add(club);
+            //加入返回列表
+            res.add(queryClubDTO);
         }
 
         return res;
@@ -77,7 +83,7 @@ public class ClubServiceImpl implements ClubService {
      * 获取当前登录用户的社团信息
      * @return
      */
-    public List<QueryMyclubDTO> getMyclub(){
+    public List<QueryClubDTO> getMyclub(){
         //先根据session中的userId（社长）获取社团
         int userId = Context.getCurrentSession().getId();
 
@@ -87,7 +93,7 @@ public class ClubServiceImpl implements ClubService {
             return null;    //查询不到返回null
 
         //构造返回列表
-        List<QueryMyclubDTO> res=new ArrayList<>();
+        List<QueryClubDTO> res=new ArrayList<>();
 
         //遍历查询到的成员信息
         for(Member member:memberList){
@@ -95,7 +101,7 @@ public class ClubServiceImpl implements ClubService {
             Club club=clubMapper.getById(member.getClubId());
 
             //拼接社团信息
-            QueryMyclubDTO MyclubDTO=new QueryMyclubDTO();
+            QueryClubDTO MyclubDTO=new QueryClubDTO();
             BeanUtils.copyProperties(club,MyclubDTO);
 
             //拼接职位信息
