@@ -86,33 +86,12 @@ public class ActivityController {
         return Result.success("参加活动成功");
     }
 
-    @GetMapping("/getMyParticipation")
+    @GetMapping("/getMyParticipation/{clubId}")
     @ApiOperation("获取我参与的活动")
-    public Result<?> getMyParticipation(){
-        //根据session获得userId
-        int userId=Context.getCurrentSession().getId();
-        List<ActivityParticipation> activityParticipations=activityParticipationMapper.getParticipationByUId(userId);
-        if(activityParticipations==null || activityParticipations.size()==0)
-            return Result.fail("您还没有参加任何活动");
-
-        List<ActivityParticipationDTO> res=new ArrayList<>();
-        //拼接完整活动信息
-        for(ActivityParticipation ap:activityParticipations){
-            //根据活动id获取活动信息
-            Activity activity=activityService.getActivityById(ap.getActivityId());
-
-
-            //先传活动报名信息
-            ActivityParticipationDTO activityParticipationDTO=ActivityParticipationDTO.builder()
-                    .userId(ap.getUserId())
-                    .userName(ap.getUserName())
-                    .isSigned(ap.isSigned())
-                    .build();
-
-            //再传活动信息
-            BeanUtils.copyProperties(activity,activityParticipationDTO);
-            res.add(activityParticipationDTO);
-        }
+    public Result<List<ActivityParticipationDTO>> getMyParticipation(@PathVariable int clubId){
+        List<ActivityParticipationDTO> res=activityService.getMyParticipation(clubId);
+        if(res==null)
+            return Result.fail("您暂无参加的活动！");
 
         return Result.success(res);
     }

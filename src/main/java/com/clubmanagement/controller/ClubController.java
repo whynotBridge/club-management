@@ -4,6 +4,7 @@ import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
 
 import com.clubmanagement.mapper.ClubApplicationMapper;
+import com.clubmanagement.model.dtos.QueryMyclubDTO;
 import com.clubmanagement.model.enums.ApplyStatusEnum;
 import com.clubmanagement.model.dtos.ClubApplicationDTO;
 import com.clubmanagement.model.dtos.UpdateClubDTO;
@@ -37,7 +38,7 @@ public class ClubController {
 
 
     @GetMapping
-    @ApiOperation("获取所有社团信息")
+    @ApiOperation("获取所有未申请加入社团信息")
     public Result<List<Club>> getAllClubs() {
         List<Club> clubs = clubService.getAllClubs();
 
@@ -73,22 +74,11 @@ public class ClubController {
 
     @GetMapping("/myclub")
     @ApiOperation("获取当前登录用户的社团信息")
-    public Result<List<Club>> getMyClub() {
-        //先根据session中的userId（社长）获取社团
-        int userId = Context.getCurrentSession().getId();
-
-        //根据userid获得clubid
-        int[] clubIds= memberService.getClubIdByUserId(userId);
-        if(clubIds==null)
-            return Result.fail("你还没有加入任何社团");
-
-        List<Club> clubs=new ArrayList<>();
-        for(int id:clubIds){
-            Club club=clubService.getById(id);
-            clubs.add(club);
-        }
-
-        return Result.success(clubs);
+    public Result<List<QueryMyclubDTO>> getMyClub() {
+        List<QueryMyclubDTO> myclubsDTO=clubService.getMyclub();
+        if(myclubsDTO==null)
+            return Result.fail("您暂无加入任何社团");
+        return Result.success(myclubsDTO);
     }
 
     @PostMapping

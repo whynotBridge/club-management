@@ -5,6 +5,7 @@ package com.clubmanagement.controller;
 
 import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
+import com.clubmanagement.model.dtos.MemberDetailDTO;
 import com.clubmanagement.model.enums.PositionEnum;
 import com.clubmanagement.model.pojos.Member;
 import com.clubmanagement.service.MemberService;
@@ -26,13 +27,13 @@ public class MemberController {
 
     @GetMapping("/{clubId}")
     @ApiOperation("社长获取成员信息")
-    public Result<List<Member>> getByClubId(@PathVariable int clubId) {
+    public Result<List<MemberDetailDTO>> getByClubId(@PathVariable int clubId) {
         //更新后直接传id
 //        //根据session中的userId获取clubId
 //        int userId=Context.getCurrentSession().getId();
 //        int clubId = memberService.getOnlyClubIdByUId(userId, PositionEnum.president);
 
-        List<Member> members = memberService.getByClubId(clubId);
+        List<MemberDetailDTO> members = memberService.getByClubId(clubId);
         return Result.success(members);
     }
 
