@@ -16,7 +16,7 @@ public interface ActivityParticipationMapper {
      * 新增申请参加活动记录
      * @param activityParticipation
      */
-    @Insert("insert into activity_participation(activity_id, user_id, username,is_signed) values(#{activityId},#{userId},#{userName},#{isSigned})")
+    @Insert("insert into activity_participation(activity_id, user_id, is_signed) values(#{activityId},#{userId},#{isSigned})")
     void joinActivity(ActivityParticipation activityParticipation);
 
     /**
