@@ -33,7 +33,7 @@ public interface ClubMapper {
      * @return
      */
     @Select("select club_id from club where president_id = #{userId}")
-    int getCIdByPId(int userId);
+    int getIdByPId(int userId);
 
     /**
      * 根据主键查询
@@ -55,4 +55,12 @@ public interface ClubMapper {
      */
     @Insert("insert into club(club_name,description,contact_info,activity_space,president_id) values(#{clubName},#{description},#{contactInfo},#{activitySpace},#{presidentId})")
     void insert(Club club);
+
+    /**
+     * 根据主键获取社长id
+     * @param clubId
+     * @return
+     */
+    @Select("select president_id from club where club_id = #{clubId}")
+    int getPIdById(int clubId);
 }

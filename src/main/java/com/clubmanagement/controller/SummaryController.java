@@ -18,11 +18,9 @@ public class SummaryController {
 
     @PostMapping("/{activityId}")
     @ApiOperation("社长发布活动总结")
-    public Result<?> summary(@PathVariable int activityId,@RequestBody String info){
-
+    public Result<?> publishSummary(@PathVariable int activityId,@RequestBody String info){
         //发布活动总结
-        summaryService.save(activityId,info);
-        return Result.success("发布活动总结成功");
+        return Result.success(summaryService.publishSummary(activityId,info));
     }
 
     @GetMapping("/{activityId}")

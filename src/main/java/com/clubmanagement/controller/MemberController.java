@@ -25,6 +25,22 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
+
+    @PostMapping("/join/{clubId}")
+    @ApiOperation("用户加入社团")
+    public Result<String> joinClub(@PathVariable int clubId) {
+
+        return Result.success(memberService.joinClub(clubId));
+
+    }
+
+    @PostMapping("/quit/{clubId}")
+    @ApiOperation("用户退出社团")
+    public Result quitClub(@PathVariable int clubId) {
+        //todo 感觉退出的话，还要涉及fee表，活动表，活动参与表
+        return Result.success(memberService.quitClub(clubId));
+    }
+
     @GetMapping("/{clubId}")
     @ApiOperation("社长获取成员信息")
     public Result<List<MemberDetailDTO>> getByClubId(@PathVariable int clubId) {
@@ -37,40 +53,11 @@ public class MemberController {
         return Result.success(members);
     }
 
-    @PostMapping("/join/{clubId}")
-    @ApiOperation("用户加入社团")
-    public Result joinClub(@PathVariable int clubId) {
-        //根据session中的userId获取用户id
-        int userId = Context.getCurrentSession().getId();
-        Member member=Member.builder().userId(userId).clubId(clubId)
-                .position(PositionEnum.applyJoin)   //申请加入
-                .joinDate(LocalDateTime.now())
-                .build();
-
-        memberService.joinClub(member);
-        return Result.success("申请加入成功");
-    }
-
-    @PostMapping("/quit/{clubId}")
-    @ApiOperation("用户退出社团")
-    public Result quitClub(@PathVariable int clubId) {
-//        Long userId = Context
-        //根据session获得userId
-        int userId = Context.getCurrentSession().getId();
-        //根据userId获取memberId
-        int memberId =memberService.getMemberIdByUserId(userId);
-
-        Member member = Member.builder().memberId(memberId).position(PositionEnum.applyQuit).build();
-
-        memberService.updatePosition(member);
-        return Result.success("申请退出成功");
-    }
 
     @PutMapping("/position/{memberId}")
     @ApiOperation("社长修改成员职位")
-    public Result updatePosition(@PathVariable int memberId, @RequestParam PositionEnum position) {
-        Member member = Member.builder().memberId(memberId).position(position).build();
-        memberService.updatePosition(member);
+    public Result<?> updatePosition(@PathVariable int memberId, @RequestParam PositionEnum position) {
+        memberService.updatePosition(memberId,position);
         return Result.success("修改成功");
     }
 

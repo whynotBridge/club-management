@@ -51,24 +51,7 @@ public class ClubController {
     @PutMapping("/{clubId}")
     @ApiOperation("社长修改社团信息")
     public Result<?> updateClub(@PathVariable int clubId,@RequestBody UpdateClubDTO updateClubDTO) {
-        log.info("updateClubDTO,{}",updateClubDTO);
-
-        //更改后参数以及穿了cid
-//        //先根据session中的userId（社长）获取社团
-//        int userId = Context.getCurrentSession().getId();
-//        log.info("当前登录用户的id：{}", userId);
-//        //根据社长id获得社团id
-//        int clubId=clubService.selectClubIdByPId(userId);
-//        log.info("clubId,{}",clubId);
-
-        Club club=Club.builder().clubId(clubId)
-                .description(updateClubDTO.getDescription())
-                .contactInfo(updateClubDTO.getContactInfo())
-                .activitySpace(updateClubDTO.getActivitySpace())
-                .build();
-
-        clubService.updateClub(club);
-        return Result.success("修改成功");
+        return Result.success(clubService.updateClub(clubId,updateClubDTO));
     }
 
     @GetMapping("/myclub")
@@ -90,6 +73,7 @@ public class ClubController {
         clubApplication.setPresidentId(userId);
         clubApplication.setStatus(ApplyStatusEnum.apply);
 
+        //向社团注册表插入记录
         clubApplicationMapper.insert(clubApplication);
         return Result.success("申请创建社团成功");
     }

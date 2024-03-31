@@ -1,7 +1,6 @@
 package com.clubmanagement.mapper;
 
 
-import com.clubmanagement.model.pojos.Admin;
 import com.clubmanagement.model.pojos.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -24,5 +23,5 @@ public interface UserMapper {
      * @return
      */
     @Select("select * from user where user_id = #{userId}")
-    User selectById(int userId);
+    User getById(int userId);
 }

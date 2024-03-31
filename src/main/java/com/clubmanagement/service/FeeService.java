@@ -7,5 +7,9 @@ public interface FeeService {
 
     void addFee(int activityId, int userId, double amount, PayStatusEnum payStatusEnum);
 
-    void PayFee(int activityId, int userId, PayStatusEnum payStatusEnum);
+    /**
+     * 根据用户id和活动id缴费
+     * @param activityId
+     */
+    String payFee(int activityId);
 }

@@ -17,7 +17,6 @@ public class ActivityParticipation implements Serializable {
     private int participationId;
     private int activityId;
     private int userId;
-    private String userName;
     private boolean isSigned;
 
 }

@@ -1,12 +1,18 @@
 package com.clubmanagement.service;
 
 import com.clubmanagement.model.dtos.ActivityParticipationDTO;
+import com.clubmanagement.model.dtos.PublishActivityDTO;
 import com.clubmanagement.model.pojos.Activity;
 
 import java.util.List;
 
 public interface ActivityService {
-    void addActivity(Activity activity);
+
+    /**
+     * 社长发布活动
+     * @param publishActivityDTO
+     */
+    void addActivity(PublishActivityDTO publishActivityDTO);
 
     List<Activity> getActivitiesByClubId(int clubId);
 
@@ -20,4 +26,10 @@ public interface ActivityService {
      * @return
      */
     List<ActivityParticipationDTO> getMyParticipation(int clubId);
+
+    /**
+     * 用户报名参加活动
+     * @param activityId
+     */
+    String joinActivity(int activityId);
 }

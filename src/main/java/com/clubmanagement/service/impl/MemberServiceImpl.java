@@ -1,5 +1,6 @@
 package com.clubmanagement.service.impl;
 
+import com.clubmanagement.commom.Context;
 import com.clubmanagement.mapper.MemberMapper;
 import com.clubmanagement.mapper.UserMapper;
 import com.clubmanagement.model.dtos.MemberDetailDTO;
@@ -11,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
         for(Member member:members){
             //拿到userId
             int userId=member.getUserId();
-            User user= userMapper.selectById(userId);
+            User user= userMapper.getById(userId);
 
             MemberDetailDTO memberDetailDTO=new MemberDetailDTO();
             //拼接成员信息
@@ -55,12 +57,55 @@ public class MemberServiceImpl implements MemberService {
         return memberDetailDTOS;
     }
 
-    public void joinClub(Member member){
+    /**
+     * 用户加入社团
+     * @param clubId
+     */
+    public String joinClub(int clubId){
+        //根据session中的userId获取用户id
+        int userId = Context.getCurrentSession().getId();
+
+        //先根据用户id和社团id查询成员表
+        Member member=memberMapper.getByUIdAndCId(userId,clubId);
+
+        //如果已经存在
+        if(member!=null)
+            return "您已经申请加入该社团了，请勿重复操作！";
+
+        //不存在，先构造信息
+        member=Member.builder().userId(userId).clubId(clubId)
+                .position(PositionEnum.applyJoin)   //申请加入
+                .joinDate(LocalDateTime.now())
+                .build();
+
+        //插入成员表
         memberMapper.joinClub(member);
+
+        return "申请加入成功！";
     }
 
-    public void updatePosition(Member member){
-        memberMapper.updatePosition(member);
+    /**
+     * 用户退出社团
+     * @param clubId
+     */
+    public String quitClub(int clubId){
+        //根据session获得userId
+        int userId = Context.getCurrentSession().getId();
+        //根据userId和clubId获取member
+        Member member=memberMapper.getByUIdAndCId(userId,clubId);
+
+        //如果已经更改
+        if(member.getPosition().equals(PositionEnum.applyQuit))
+            return "你已经申请退出该社团了，请勿重复申请！";
+
+        //更改职位信息
+        memberMapper.updatePositionById(member);
+        return "申请退出成功！";
+    }
+
+    public void updatePosition(int memberId,PositionEnum position){
+        Member member = Member.builder().memberId(memberId).position(position).build();
+        memberMapper.updatePositionById(member);
     }
 
     public void deleteQuitMembers(){

@@ -3,10 +3,7 @@ package com.clubmanagement.mapper;
 
 import com.clubmanagement.model.enums.ApplyStatusEnum;
 import com.clubmanagement.model.pojos.ClubApplication;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -44,4 +41,11 @@ public interface ClubApplicationMapper {
      */
     @Update("update club_application set status = #{status} where application_id = #{applicationId}")
     void updateById(ClubApplication clubApplication);
+
+    /**
+     * 根据主键删除数据
+     * @param clubApplicationId
+     */
+    @Delete("delete from club_application where application_id = #{clubApplicationId}")
+    void deleteById(int clubApplicationId);
 }

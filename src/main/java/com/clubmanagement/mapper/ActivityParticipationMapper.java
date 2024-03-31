@@ -1,7 +1,6 @@
 package com.clubmanagement.mapper;
 
 
-import com.clubmanagement.model.pojos.Activity;
 import com.clubmanagement.model.pojos.ActivityParticipation;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,7 +26,7 @@ public interface ActivityParticipationMapper {
      * @return
      */
     @Select("select * from activity_participation where activity_id=#{activityId} and user_id=#{userId}")
-    ActivityParticipation getParticipationByAIdAndUId(int activityId, int userId);
+    ActivityParticipation getByAIdAndUId(int activityId, int userId);
 
     /**
      * 根据活动id和用户id来签到 //todo 联合索引
@@ -51,7 +50,7 @@ public interface ActivityParticipationMapper {
      * @return
      */
     @Select("select * from activity_participation where activity_id=#{activityId}")
-    List<ActivityParticipation> getParticipationByAId(int activityId);
+    List<ActivityParticipation> getByAId(int activityId);
 
     /**
      * 根据活动id获取所有参加活动未签到的信息
@@ -59,7 +58,7 @@ public interface ActivityParticipationMapper {
      * @return
      */
     @Select("select * from activity_participation where activity_id=#{activityId} and is_signed=0")
-    List<ActivityParticipation> getUnSigned(int activityId);
+    List<ActivityParticipation> getAllUnSignedByAId(int activityId);
 
     /**
      * 根据主键来签到

@@ -34,11 +34,11 @@ public interface MemberMapper {
     void joinClub(Member member);
 
     /**
-     * 根据主键修改信息
+     * 根据主键修改职位信息
      * @param member
      */
     @Update("update member set position = #{position} where member_id = #{memberId}")
-    void updatePosition(Member member);
+    void updatePositionById(Member member);
 
     /**
      * 根据在团状态（已退出）删除记录
@@ -55,7 +55,7 @@ public interface MemberMapper {
     int[] getClubIdByUserId(int userid);
 
     /**
-     * 根据用户id其所有成员id
+     * 根据userId获取memberId
      * @param userId
      * @return
      */

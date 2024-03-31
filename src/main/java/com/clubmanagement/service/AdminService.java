@@ -18,4 +18,10 @@ public interface AdminService {
      * @return
      */
     Admin selectById(int adminId);
+
+    /**
+     * 管理员审核社团申请
+     * @param clubApplicationId
+     */
+    void agree(int clubApplicationId);
 }

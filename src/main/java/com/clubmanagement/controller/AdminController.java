@@ -97,20 +97,7 @@ public class AdminController {
     @ApiOperation("管理员同意社团注册")
     @Transactional
     public Result<?> agree(@PathVariable int clubApplicationId){
-        //根据社团申请id获取社团申请
-        ClubApplication clubApplication = clubApplicationMapper.selectById(clubApplicationId);
-
-        Club club=new Club();
-        BeanUtils.copyProperties(clubApplication, club);
-
-
-        //同意申请
-        clubApplication.setStatus(ApplyStatusEnum.agree);
-        clubApplicationMapper.updateById(clubApplication);//先更新申请表中的状态
-
-        //插入社团表
-        clubService.insert(club);
-
+        adminService.agree(clubApplicationId);
         return Result.success("审核成功");
     }
 }

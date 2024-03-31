@@ -1,6 +1,7 @@
 package com.clubmanagement.mapper;
 
 
+import com.clubmanagement.model.pojos.Summary;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -24,7 +25,7 @@ public interface SummaryMapper {
      * @return
      */
     @Select("select info from summary where activity_id = #{activityId}")
-    String getSummaryByActivityId(int activityId);
+    String getInfoByAId(int activityId);
 
     /**
      * 根据活动id修改总结信息
@@ -33,5 +34,6 @@ public interface SummaryMapper {
      */
     @Update("update summary set info = #{info} where activity_id = #{activityId}")
     void update(int activityId, String info);
+
 }
 
