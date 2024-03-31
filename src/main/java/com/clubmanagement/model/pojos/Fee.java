@@ -1,13 +1,10 @@
 package com.clubmanagement.model.pojos;
 
-import com.clubmanagement.model.enums.PayStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.io.Serializable;
 
 
@@ -22,7 +19,5 @@ public class Fee implements Serializable {
     private int activityId;
     private int userId;
     private double amount;
-
-    @Enumerated(EnumType.STRING)
-    private PayStatusEnum status;
+    private boolean isPaid;
 }

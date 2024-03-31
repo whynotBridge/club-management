@@ -1,6 +1,6 @@
 package com.clubmanagement.service;
 
-import com.clubmanagement.model.dtos.ActivityParticipationDTO;
+import com.clubmanagement.model.dtos.MyActivityParticipationDTO;
 import com.clubmanagement.model.dtos.PublishActivityDTO;
 import com.clubmanagement.model.pojos.Activity;
 
@@ -25,7 +25,7 @@ public interface ActivityService {
      * @param clubId
      * @return
      */
-    List<ActivityParticipationDTO> getMyParticipation(int clubId);
+    List<MyActivityParticipationDTO> getMyParticipation(int clubId);
 
     /**
      * 用户报名参加活动

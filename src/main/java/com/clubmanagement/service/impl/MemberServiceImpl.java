@@ -103,6 +103,11 @@ public class MemberServiceImpl implements MemberService {
         return "申请退出成功！";
     }
 
+    /**
+     * 社长修改成员职位
+     * @param memberId
+     * @param position 不同职位
+     */
     public void updatePosition(int memberId,PositionEnum position){
         Member member = Member.builder().memberId(memberId).position(position).build();
         memberMapper.updatePositionById(member);

@@ -2,9 +2,8 @@ package com.clubmanagement.service.impl;
 
 import com.clubmanagement.commom.Context;
 import com.clubmanagement.mapper.*;
-import com.clubmanagement.model.dtos.ActivityParticipationDTO;
+import com.clubmanagement.model.dtos.MyActivityParticipationDTO;
 import com.clubmanagement.model.dtos.PublishActivityDTO;
-import com.clubmanagement.model.enums.PayStatusEnum;
 import com.clubmanagement.model.pojos.Activity;
 import com.clubmanagement.model.pojos.ActivityParticipation;
 import com.clubmanagement.model.pojos.Fee;
@@ -72,7 +71,7 @@ public class ActivityServiceImpl implements ActivityService {
      * @param clubId
      * @return
      */
-    public List<ActivityParticipationDTO> getMyParticipation(int clubId){
+    public List<MyActivityParticipationDTO> getMyParticipation(int clubId){
         //根据session获得userId
         int userId= Context.getCurrentSession().getId();
 
@@ -81,7 +80,7 @@ public class ActivityServiceImpl implements ActivityService {
         if(activityParticipations==null || activityParticipations.size()==0)
             return null;
 
-        List<ActivityParticipationDTO> res=new ArrayList<>();
+        List<MyActivityParticipationDTO> res=new ArrayList<>();
         //拼接完整活动信息
         for(ActivityParticipation ap:activityParticipations){
 
@@ -95,23 +94,24 @@ public class ActivityServiceImpl implements ActivityService {
             //3如果满足参数条件
 
             //3.1先传活动报名信息
-            ActivityParticipationDTO activityParticipationDTO=ActivityParticipationDTO.builder()
+            MyActivityParticipationDTO myActivityParticipationDTO = MyActivityParticipationDTO.builder()
                     .isSigned(ap.isSigned())
                     .activityId(ap.getActivityId())
                     .build();
 
             //3.2再传活动信息
-            BeanUtils.copyProperties(activity,activityParticipationDTO);
+            BeanUtils.copyProperties(activity, myActivityParticipationDTO);
 
             //3.3用户信息
             User user=userMapper.getById(userId);
-            activityParticipationDTO.setEmail(user.getEmail());
+            myActivityParticipationDTO.setEmail(user.getEmail());
 
             //3.4是否缴费
             Fee fee=feeMapper.getByAIdAndUId(activity.getActivityId(),userId);
-            activityParticipationDTO.setStatus(fee.getStatus());
+            myActivityParticipationDTO.setPaid(fee.isPaid());
 
-            res.add(activityParticipationDTO);
+
+            res.add(myActivityParticipationDTO);
 
 
         }
@@ -143,7 +143,7 @@ public class ActivityServiceImpl implements ActivityService {
         double amount=activityMapper.getAmountByActivityId(activityId);
 
         //4.2将缴费存入fee表
-        feeMapper.addFee(activityId,userId,amount, PayStatusEnum.Pending);
+        feeMapper.addFee(activityId,userId,amount, false);
 
         //4.3构造参加活动信息
         ActivityParticipation activityParticipation=ActivityParticipation.builder()

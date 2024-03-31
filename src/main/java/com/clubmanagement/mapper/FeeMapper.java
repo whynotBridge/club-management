@@ -2,7 +2,6 @@ package com.clubmanagement.mapper;
 
 
 
-import com.clubmanagement.model.enums.PayStatusEnum;
 import com.clubmanagement.model.pojos.Fee;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,10 +16,10 @@ public interface FeeMapper {
      * @param activityId
      * @param userId
      * @param amount
-     * @param payStatusEnum
+     * @param isPaid
      */
-    @Insert("insert into fee(activity_id, user_id, amount, status) VALUES (#{activityId}, #{userId}, #{amount}, #{payStatusEnum})")
-    void addFee(int activityId, int userId, double amount, PayStatusEnum payStatusEnum);
+    @Insert("insert into fee(activity_id, user_id, amount, is_paid) VALUES (#{activityId}, #{userId}, #{amount}, #{isPaid})")
+    void addFee(int activityId, int userId, double amount, boolean isPaid);
 
     /**
      * 根据活动id和用户id获取缴费信息
@@ -34,10 +33,10 @@ public interface FeeMapper {
      * 根据活动id和用户id来缴费 //todo 联合索引
      * @param activityId
      * @param userId
-     * @param payStatusEnum
+     * @param isPaid
      */
-    @Update("update fee set status=#{payStatusEnum} where activity_id=#{activityId} and user_id=#{userId}")
-    void payFee(int activityId, int userId, PayStatusEnum payStatusEnum);
+    @Update("update fee set is_paid=#{isPaid} where activity_id=#{activityId} and user_id=#{userId}")
+    void payFee(int activityId, int userId, boolean isPaid);
 
 
 }

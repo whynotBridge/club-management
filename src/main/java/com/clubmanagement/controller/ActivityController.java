@@ -4,18 +4,24 @@ import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.ActivityParticipationMapper;
 import com.clubmanagement.mapper.ClubMapper;
+import com.clubmanagement.mapper.UserMapper;
 import com.clubmanagement.model.dtos.ActivityParticipationDTO;
+import com.clubmanagement.model.dtos.MyActivityParticipationDTO;
 import com.clubmanagement.model.dtos.PublishActivityDTO;
 import com.clubmanagement.model.pojos.Activity;
 import com.clubmanagement.model.pojos.ActivityParticipation;
+import com.clubmanagement.model.pojos.Fee;
+import com.clubmanagement.model.pojos.User;
 import com.clubmanagement.service.ActivityService;
 import com.clubmanagement.service.FeeService;
+import com.clubmanagement.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,6 +30,9 @@ import java.util.List;
 public class ActivityController {
     @Autowired
     ClubMapper clubMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Autowired
     ActivityParticipationMapper activityParticipationMapper;
@@ -62,8 +71,8 @@ public class ActivityController {
 
     @GetMapping("/getMyParticipation/{clubId}")
     @ApiOperation("获取我参与的活动")
-    public Result<List<ActivityParticipationDTO>> getMyParticipation(@PathVariable int clubId){
-        List<ActivityParticipationDTO> res=activityService.getMyParticipation(clubId);
+    public Result<List<MyActivityParticipationDTO>> getMyParticipation(@PathVariable int clubId){
+        List<MyActivityParticipationDTO> res=activityService.getMyParticipation(clubId);
         if(res==null)
             return Result.fail("您暂无参加的活动！");
 
@@ -111,7 +120,27 @@ public class ActivityController {
         if(activityParticipations==null || activityParticipations.size()==0)
             return Result.fail("没有人参加该活动");
 
-        return Result.success(activityParticipations);
+        List<ActivityParticipationDTO> res=new ArrayList<>();
+        //遍历参与表信息，拼接返回信息
+        for(ActivityParticipation activityParticipation:activityParticipations) {
+            ActivityParticipationDTO activityParticipationDTO = new ActivityParticipationDTO();
+            //拼接参与表
+            activityParticipationDTO.setParticipationId(activityParticipation.getParticipationId());
+            activityParticipationDTO.setUserId(activityParticipation.getUserId());
+            activityParticipationDTO.setSigned(activityParticipation.isSigned());
+            //拼接用户信息
+            User user = userMapper.getById(activityParticipation.getUserId());
+            activityParticipationDTO.setUsername(user.getUsername());
+            activityParticipationDTO.setEmail(user.getEmail());
+            //拼接缴费信息
+            Fee fee = feeService.getByAIdAndUId(activityId, activityParticipation.getUserId());
+            activityParticipationDTO.setPaid(fee.isPaid());
+
+            res.add(activityParticipationDTO);
+        }
+
+
+        return Result.success(res);
 
     }
 
