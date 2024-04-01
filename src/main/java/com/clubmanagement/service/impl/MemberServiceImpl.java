@@ -11,6 +11,7 @@ import com.clubmanagement.service.MemberService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -98,7 +99,10 @@ public class MemberServiceImpl implements MemberService {
         if(member.getPosition().equals(PositionEnum.applyQuit))
             return "你已经申请退出该社团了，请勿重复申请！";
 
-        //更改职位信息
+        //设置职位信息
+        member.setPosition(PositionEnum.applyQuit);
+
+        //更改记录
         memberMapper.updatePositionById(member);
         return "申请退出成功！";
     }
@@ -113,6 +117,10 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.updatePositionById(member);
     }
 
+    /**
+     * 每隔一分钟删除member表退出的成员
+     */
+    @Transactional
     public void deleteQuitMembers(){
         memberMapper.deleteQuitMembers();
     }

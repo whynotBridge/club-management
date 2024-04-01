@@ -36,6 +36,9 @@ public interface MemberService {
      */
     void updatePosition(int memberId,PositionEnum position);
 
+    /**
+     * 每隔一分钟删除member表退出的成员
+     */
     void deleteQuitMembers();
 
     int[] getClubIdByUserId(int userid);

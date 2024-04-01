@@ -1,4 +1,4 @@
-package com.clubmanagement.exception;
+package com.clubmanagement.commom;
 
 import java.io.Serializable;
 

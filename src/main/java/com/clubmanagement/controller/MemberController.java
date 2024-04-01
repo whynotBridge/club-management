@@ -61,11 +61,5 @@ public class MemberController {
         return Result.success("修改成功");
     }
 
-    //定期删除已退出（position为alreadyQuit）的成员
-    @DeleteMapping()
-    @ApiOperation("删除已退出的成员")
-    public Result deleteQuitMembers() {
-        memberService.deleteQuitMembers();
-        return Result.success("删除已退出的成员成功");
-    }
+
 }
