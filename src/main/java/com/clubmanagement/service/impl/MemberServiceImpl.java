@@ -8,6 +8,7 @@ import com.clubmanagement.model.enums.PositionEnum;
 import com.clubmanagement.model.pojos.Member;
 import com.clubmanagement.model.pojos.User;
 import com.clubmanagement.service.MemberService;
+import com.clubmanagement.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,8 @@ public class MemberServiceImpl implements MemberService {
     MemberMapper memberMapper;
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
+
 
     /**
      * 根据社团ID获取成员详细信息
@@ -42,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
         for(Member member:members){
             //拿到userId
             int userId=member.getUserId();
-            User user= userMapper.getById(userId);
+            User user= userService.getById(userId);
 
             MemberDetailDTO memberDetailDTO=new MemberDetailDTO();
             //拼接成员信息
@@ -54,7 +56,6 @@ public class MemberServiceImpl implements MemberService {
             //加入队列
             memberDetailDTOS.add(memberDetailDTO);
         }
-
         return memberDetailDTOS;
     }
 

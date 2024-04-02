@@ -13,6 +13,7 @@ import com.clubmanagement.model.pojos.ActivityParticipation;
 import com.clubmanagement.model.pojos.Fee;
 import com.clubmanagement.model.pojos.User;
 import com.clubmanagement.service.ActivityService;
+import com.clubmanagement.service.ClubService;
 import com.clubmanagement.service.FeeService;
 import com.clubmanagement.service.UserService;
 import io.swagger.annotations.Api;
@@ -28,11 +29,9 @@ import java.util.List;
 @RequestMapping("/activities")
 @Api(tags = "活动管理")
 public class ActivityController {
-    @Autowired
-    ClubMapper clubMapper;
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
     @Autowired
     ActivityParticipationMapper activityParticipationMapper;
@@ -129,7 +128,7 @@ public class ActivityController {
             activityParticipationDTO.setUserId(activityParticipation.getUserId());
             activityParticipationDTO.setSigned(activityParticipation.isSigned());
             //拼接用户信息
-            User user = userMapper.getById(activityParticipation.getUserId());
+            User user = userService.getById(activityParticipation.getUserId());
             activityParticipationDTO.setUsername(user.getUsername());
             activityParticipationDTO.setEmail(user.getEmail());
             //拼接缴费信息

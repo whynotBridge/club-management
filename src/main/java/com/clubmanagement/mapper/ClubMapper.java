@@ -12,7 +12,7 @@ import java.util.List;
 public interface ClubMapper {
 
     /**
-     * 查询club表所有信息
+     * 查询club表所有信息      //todo 弄成视图
      * @return
      */
     @Select("select * from club")

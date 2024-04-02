@@ -2,6 +2,9 @@ package com.clubmanagement.service;
 
 import com.clubmanagement.model.dtos.LoginDTO;
 import com.clubmanagement.model.pojos.Admin;
+import com.clubmanagement.model.pojos.ClubApplication;
+
+import java.util.List;
 
 public interface AdminService {
     /**
@@ -20,8 +23,19 @@ public interface AdminService {
     Admin selectById(int adminId);
 
     /**
-     * 管理员审核社团申请
+     * 管理员同意社团申请
      * @param clubApplicationId
      */
     void agree(int clubApplicationId);
+
+    /**
+     * 管理员获取社团注册
+     */
+    List<ClubApplication> getAllApplyClubApplications();
+
+    /**
+     * 管理员拒绝社团申请
+     * @param clubApplicationId
+     */
+    void reject(int clubApplicationId);
 }

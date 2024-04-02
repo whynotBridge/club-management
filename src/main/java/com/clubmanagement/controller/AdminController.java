@@ -1,5 +1,6 @@
 package com.clubmanagement.controller;
 
+import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.MySession;
 import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.ClubApplicationMapper;
@@ -72,24 +73,10 @@ public class AdminController {
 
     @PostMapping("/allNewClub")
     @ApiOperation("管理员审核社团注册")
-    public Result<?> newClub(HttpServletRequest request){
-        //获取当前登录用户的id
-        MySession mySession = (MySession) request.getSession().getAttribute("user");
-
-        //根据id获取用户信息
-        Admin admin=adminService.selectById(mySession.getId());
-
-        //判断用户是否为管理员
-        if(admin==null){
-            return Result.fail("您不是管理员，无法审核社团注册");
-        }
-
-        //获取所有未审核的社团
-        List<ClubApplication> clubApplications = clubApplicationMapper.getAllApplyClubApplications(ApplyStatusEnum.apply);
-        if(clubApplications == null || clubApplications.size() == 0){
-            return Result.fail("没有未审核的社团");
-        }
-
+    public Result<?> newClub(){
+        List<ClubApplication> clubApplications=adminService.getAllApplyClubApplications();
+        if(clubApplications.isEmpty())
+            return Result.success("没有待审核的社团注册");
         return Result.success(clubApplications);
     }
 
@@ -98,6 +85,14 @@ public class AdminController {
     @Transactional
     public Result<?> agree(@PathVariable int clubApplicationId){
         adminService.agree(clubApplicationId);
+        return Result.success("审核成功");
+    }
+
+    @PostMapping("/reject/{clubApplicationId}")
+    @ApiOperation("管理员拒绝社团注册")
+    @Transactional
+    public Result<?> reject(@PathVariable int clubApplicationId){
+        adminService.reject(clubApplicationId);
         return Result.success("审核成功");
     }
 }

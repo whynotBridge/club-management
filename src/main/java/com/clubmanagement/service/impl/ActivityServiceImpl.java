@@ -9,6 +9,7 @@ import com.clubmanagement.model.pojos.ActivityParticipation;
 import com.clubmanagement.model.pojos.Fee;
 import com.clubmanagement.model.pojos.User;
 import com.clubmanagement.service.ActivityService;
+import com.clubmanagement.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class ActivityServiceImpl implements ActivityService {
     ClubMapper clubMapper;
 
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
 
     /**
@@ -103,7 +104,7 @@ public class ActivityServiceImpl implements ActivityService {
             BeanUtils.copyProperties(activity, myActivityParticipationDTO);
 
             //3.3用户信息
-            User user=userMapper.getById(userId);
+            User user=userService.getById(userId);
             myActivityParticipationDTO.setEmail(user.getEmail());
 
             //3.4是否缴费
@@ -112,8 +113,6 @@ public class ActivityServiceImpl implements ActivityService {
 
 
             res.add(myActivityParticipationDTO);
-
-
         }
 
         return res;
