@@ -1,6 +1,7 @@
 package com.clubmanagement.controller;
 
 import com.clubmanagement.commom.Result;
+import com.clubmanagement.model.dtos.SummaryInfoDTO;
 import com.clubmanagement.service.SummaryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,9 +19,9 @@ public class SummaryController {
 
     @PostMapping("/{activityId}")
     @ApiOperation("社长发布活动总结")
-    public Result<?> publishSummary(@PathVariable int activityId,@RequestBody String info){
+    public Result<?> publishSummary(@PathVariable int activityId,@RequestBody SummaryInfoDTO summaryInfo){
         //发布活动总结
-        return Result.success(summaryService.publishSummary(activityId,info));
+        return Result.success(summaryService.publishSummary(activityId,summaryInfo));
     }
 
     @GetMapping("/{activityId}")
@@ -34,8 +35,8 @@ public class SummaryController {
 
     @PutMapping("/{activityId}")
     @ApiOperation("修改活动总结")
-    public Result<?> updateSummary(@PathVariable int activityId,@RequestBody String info){
-        summaryService.update(activityId,info);
+    public Result<?> updateSummary(@PathVariable int activityId,@RequestBody SummaryInfoDTO summaryInfo){
+        summaryService.update(activityId,summaryInfo);
         return Result.success("修改活动总结成功");
     }
 }

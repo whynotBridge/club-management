@@ -12,14 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 @ApiModel("我的活动参与返回信息")
 public class MyActivityParticipationDTO implements Serializable {
-//    @ApiModelProperty(value = "用户ID")
-//    private int userId;
-//
-//    @ApiModelProperty(value = "用户名")
-//    private String userName;
-//
-//    @ApiModelProperty(value = "社团ID")
-//    private int clubId;
     @ApiModelProperty(value = "活动ID")
     private int activityId;
 
@@ -43,6 +35,9 @@ public class MyActivityParticipationDTO implements Serializable {
 
     @ApiModelProperty(value = "缴费情况")
     private boolean isPaid;
+
+    @ApiModelProperty(value = "活动费用")
+    private double amount;
 
     @ApiModelProperty(value = "邮箱")
     private String email;

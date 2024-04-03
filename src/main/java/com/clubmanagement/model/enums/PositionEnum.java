@@ -5,7 +5,7 @@ public enum PositionEnum {
     applyQuit,     //申请退出
     applyJoin,     //申请加入
     member,         //成员
-    cadreMan,       //骨干(最多5位)
-    vicePresident,  //副社长(最多两位)
-    president       //社长(只有一位)
+    cadreMan,       //骨干
+    vicePresident,  //副社长
+    president       //社长
 }

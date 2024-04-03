@@ -6,6 +6,7 @@ import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.MySession;
 import com.clubmanagement.commom.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
@@ -18,6 +19,7 @@ import java.io.IOException;
  * 拦截用户请求，并将用户信息存入ThreadLocal
  */
 @WebFilter(filterName = "WebFilterConfig",urlPatterns = "/*")
+@Order(100) // 数值越小，优先级越高，因此这个过滤器后执行
 @Slf4j
 public class WebFilterConfig implements Filter{
     //路径匹配器，支持通配符
@@ -25,6 +27,7 @@ public class WebFilterConfig implements Filter{
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        log.info("WebFilterConfig doFilter 。。。");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -68,7 +71,6 @@ public class WebFilterConfig implements Filter{
         log.info("用户未登录");
         //如果未登录则返回未登录结果，通过输出流方式向客户端页面响应数据
         response.getWriter().write(JSON.toJSONString(Result.fail("用户未登入")));
-        return;
 
     }
 

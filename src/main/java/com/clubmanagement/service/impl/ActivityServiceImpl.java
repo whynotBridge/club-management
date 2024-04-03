@@ -107,9 +107,10 @@ public class ActivityServiceImpl implements ActivityService {
             User user=userService.getById(userId);
             myActivityParticipationDTO.setEmail(user.getEmail());
 
-            //3.4是否缴费
+            //3.4缴费信息
             Fee fee=feeMapper.getByAIdAndUId(activity.getActivityId(),userId);
             myActivityParticipationDTO.setPaid(fee.isPaid());
+            myActivityParticipationDTO.setAmount(fee.getAmount());
 
 
             res.add(myActivityParticipationDTO);
