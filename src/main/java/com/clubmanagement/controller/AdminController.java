@@ -21,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -94,5 +95,36 @@ public class AdminController {
     public Result<?> reject(@PathVariable int clubApplicationId){
         adminService.reject(clubApplicationId);
         return Result.success("审核成功");
+    }
+
+
+    @GetMapping("/backup")
+    @ApiOperation("管理员备份数据库")
+    public Result<?> backup() {
+        try {
+            log.info("数据开始备份了。。。");
+            adminService.backupDatabase();
+            return Result.success("备份成功！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.fail("备份过程异常！");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/restore")
+    @ApiOperation("管理员还原数据库")
+    public Result<?> restore(){
+        try {
+            log.info("数据开始还原了。。。");
+            adminService.restoreDatabase();
+            return Result.success("数据还原成功！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.fail("还原过程异常！");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

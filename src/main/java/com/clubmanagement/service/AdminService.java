@@ -4,6 +4,7 @@ import com.clubmanagement.model.dtos.LoginDTO;
 import com.clubmanagement.model.pojos.Admin;
 import com.clubmanagement.model.pojos.ClubApplication;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface AdminService {
@@ -38,4 +39,14 @@ public interface AdminService {
      * @param clubApplicationId
      */
     void reject(int clubApplicationId);
+
+    /**
+     * 管理员备份数据库
+     */
+    void backupDatabase() throws IOException, InterruptedException;
+
+    /**
+     * 管理员还原数据库
+     */
+    void restoreDatabase() throws IOException, InterruptedException;
 }

@@ -14,9 +14,16 @@ import com.clubmanagement.model.pojos.ClubApplication;
 import com.clubmanagement.service.AdminService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -106,4 +113,41 @@ public class AdminServiceImpl implements AdminService {
         clubApplication.setStatus(ApplyStatusEnum.reject);
         clubApplicationMapper.updateById(clubApplication);//更新申请表中的状态
     }
+
+    @Value("${club-management.datasource.username}")
+    private String username;
+
+    @Value("${club-management.datasource.password}")
+    private String password;
+
+//    private final String backupDirectory = "D:\\Desktop\\backup_file666.sql";
+    //这个放你备份文件的存放路径，给绝对路径，要终端命令行处理！！！我是将其放在application.yml统一路径
+    private final String backupDirectory = "D:\\Desktop\\club-management\\src\\main\\resources\\backup.sql";
+
+
+    /**
+     * 管理员备份数据库
+     */
+    public void backupDatabase() throws InterruptedException, IOException {
+        //mysqldump -u root -p1234 club_management > D:\Desktop\backup_file.sql
+        String cmd="mysqldump -u "+username+" -p"+password+" club_management > "+backupDirectory;
+    // 执行MySQL备份命令
+        String[] backupCommand = {"cmd.exe", "/c", cmd};
+        Process process = Runtime.getRuntime().exec(backupCommand);
+        process.waitFor();
+    }
+
+
+    /**
+     * 管理员还原数据库
+     */
+    public void restoreDatabase() throws IOException, InterruptedException {
+        // 执行MySQL还原命令
+        //mysql -u root -p1234 club_management < D:\Desktop\backup_file.sql
+        String cmd="mysql -u "+username+" -p"+password+" club_management < "+backupDirectory;
+        String[] backupCommand = {"cmd.exe", "/c", cmd};
+        Process process = Runtime.getRuntime().exec(backupCommand);
+        process.waitFor();
+    }
 }
+
