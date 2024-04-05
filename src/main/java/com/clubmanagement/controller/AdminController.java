@@ -4,6 +4,7 @@ import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.MySession;
 import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.ClubApplicationMapper;
+import com.clubmanagement.model.dtos.QueryClubApplication;
 import com.clubmanagement.model.enums.ApplyStatusEnum;
 import com.clubmanagement.model.dtos.LoginDTO;
 import com.clubmanagement.model.pojos.Admin;
@@ -72,10 +73,10 @@ public class AdminController {
         return Result.success("退出成功");
     }
 
-    @PostMapping("/allNewClub")
+    @GetMapping("/allNewClub")
     @ApiOperation("管理员审核社团注册")
     public Result<?> newClub(){
-        List<ClubApplication> clubApplications=adminService.getAllApplyClubApplications();
+        List<QueryClubApplication> clubApplications=adminService.getAllApplyClubApplications();
         if(clubApplications.isEmpty())
             return Result.success("没有待审核的社团注册");
         return Result.success(clubApplications);

@@ -6,11 +6,14 @@ import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.AdminMapper;
 import com.clubmanagement.mapper.ClubApplicationMapper;
 import com.clubmanagement.mapper.ClubMapper;
+import com.clubmanagement.mapper.UserMapper;
 import com.clubmanagement.model.dtos.LoginDTO;
+import com.clubmanagement.model.dtos.QueryClubApplication;
 import com.clubmanagement.model.enums.ApplyStatusEnum;
 import com.clubmanagement.model.pojos.Admin;
 import com.clubmanagement.model.pojos.Club;
 import com.clubmanagement.model.pojos.ClubApplication;
+import com.clubmanagement.model.pojos.User;
 import com.clubmanagement.service.AdminService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,10 +34,13 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    private AdminMapper adminMapper;
+    AdminMapper adminMapper;
 
     @Autowired
     ClubApplicationMapper clubApplicationMapper;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Autowired
     ClubMapper clubMapper;
@@ -59,7 +66,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * 管理员获取社团注册
      */
-    public List<ClubApplication> getAllApplyClubApplications(){
+    public List<QueryClubApplication> getAllApplyClubApplications(){
 //        //获取当前登录用户的id
 //        int adminId=Context.getCurrentSession().getId();
 //
@@ -75,7 +82,19 @@ public class AdminServiceImpl implements AdminService {
 
         //获取所有未审核的社团
         List<ClubApplication> clubApplications = clubApplicationMapper.getAllApplyClubApplications(ApplyStatusEnum.apply);
-        return clubApplications;
+        List<QueryClubApplication> res=new ArrayList<>();
+        for(ClubApplication clubApplication:clubApplications){
+            QueryClubApplication queryClubApplication=new QueryClubApplication();
+            BeanUtils.copyProperties(clubApplication,queryClubApplication);
+
+            //查询社长信息
+            User user=userMapper.getById(clubApplication.getPresidentId());
+            queryClubApplication.setPresidentName(user.getUsername());
+
+
+            res.add(queryClubApplication);
+        }
+        return res;
     }
 
     /**

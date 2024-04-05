@@ -1,6 +1,7 @@
 package com.clubmanagement.service;
 
 import com.clubmanagement.model.dtos.LoginDTO;
+import com.clubmanagement.model.dtos.QueryClubApplication;
 import com.clubmanagement.model.pojos.Admin;
 import com.clubmanagement.model.pojos.ClubApplication;
 
@@ -32,7 +33,7 @@ public interface AdminService {
     /**
      * 管理员获取社团注册
      */
-    List<ClubApplication> getAllApplyClubApplications();
+    List<QueryClubApplication> getAllApplyClubApplications();
 
     /**
      * 管理员拒绝社团申请
