@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 
 @RestController
 @RequestMapping("/summaries")
@@ -29,7 +31,7 @@ public class SummaryController {
     public Result<?> getSummaryByActivityId(@PathVariable int activityId){
         String info=summaryService.getSummaryByActivityId(activityId);
         if(info==null)
-            return Result.successMsg("该活动暂无总结");
+            return Result.successMsg("该活动暂无总结",new ArrayList<>());
         return Result.success(info);
     }
 

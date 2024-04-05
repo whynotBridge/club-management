@@ -55,7 +55,7 @@ public class ActivityController {
     public Result<?> getActivitiesByClubId(@PathVariable int clubId){
         List<Activity> activities=activityService.getActivitiesByClubId(clubId);
         if(activities==null || activities.size()==0)
-            return Result.successMsg("你的社团没有组织任何活动");
+            return Result.successMsg("你的社团没有组织任何活动",new ArrayList<>());
 
         return Result.success(activities);
     }
@@ -73,7 +73,7 @@ public class ActivityController {
     public Result<?> getMyParticipation(@PathVariable int clubId){
         List<MyActivityParticipationDTO> res=activityService.getMyParticipation(clubId);
         if(res==null)
-            return Result.successMsg("您暂无参加的活动！");
+            return Result.successMsg("您暂无参加的活动！",new ArrayList<>());
 
         return Result.success(res);
     }
@@ -117,7 +117,7 @@ public class ActivityController {
         //根据活动id获取活动参与表信息
         List<ActivityParticipation> activityParticipations=activityParticipationMapper.getByAId(activityId);
         if(activityParticipations==null || activityParticipations.size()==0)
-            return Result.successMsg("没有人参加该活动");
+            return Result.successMsg("没有人参加该活动",new ArrayList<>());
 
         List<ActivityParticipationDTO> res=new ArrayList<>();
         //遍历参与表信息，拼接返回信息
@@ -150,7 +150,7 @@ public class ActivityController {
         //根据活动id获取所有未签到的成员信息
         List<ActivityParticipation> activityParticipations=activityParticipationMapper.getAllUnSignedByAId(activityId);
         if(activityParticipations==null || activityParticipations.size()==0)
-            return Result.successMsg("所有人都已经签到！");
+            return Result.successMsg("所有人都已经签到！",new ArrayList<>());
 
         return Result.success(activityParticipations);
     }

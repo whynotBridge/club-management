@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,10 +34,11 @@ public class Result<T> implements Serializable{
         return r;
     }
 
-    public static <T> Result<T> successMsg(String msg) {
+    public static <T> Result<T> successMsg(String msg,T data) {
         Result<T> r = new Result<T>();
         r.msg=msg;
         r.code = 1;
+        r.data=data;
         return r;
     }
 
