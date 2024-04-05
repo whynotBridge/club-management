@@ -3,17 +3,12 @@ package com.clubmanagement.service.impl;
 import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.MySession;
 import com.clubmanagement.commom.Result;
-import com.clubmanagement.mapper.AdminMapper;
-import com.clubmanagement.mapper.ClubApplicationMapper;
-import com.clubmanagement.mapper.ClubMapper;
-import com.clubmanagement.mapper.UserMapper;
+import com.clubmanagement.mapper.*;
 import com.clubmanagement.model.dtos.LoginDTO;
 import com.clubmanagement.model.dtos.QueryClubApplication;
 import com.clubmanagement.model.enums.ApplyStatusEnum;
-import com.clubmanagement.model.pojos.Admin;
-import com.clubmanagement.model.pojos.Club;
-import com.clubmanagement.model.pojos.ClubApplication;
-import com.clubmanagement.model.pojos.User;
+import com.clubmanagement.model.enums.PositionEnum;
+import com.clubmanagement.model.pojos.*;
 import com.clubmanagement.service.AdminService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +21,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,6 +41,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     ClubMapper clubMapper;
+
+    @Autowired
+    MemberMapper memberMapper;
 
     /**
      * 登入
@@ -115,6 +115,15 @@ public class AdminServiceImpl implements AdminService {
 
         //插入社团表
         clubMapper.insert(club);
+
+        int clubId=clubMapper.getIdByPId(clubApplication.getPresidentId());
+        //将社长插入成员表
+        Member member=new Member();
+        member.setUserId(clubApplication.getPresidentId());
+        member.setClubId(clubId);
+        member.setPosition(PositionEnum.president);
+        member.setJoinDate(LocalDateTime.now());
+        memberMapper.joinClub(member);
     }
 
     /**

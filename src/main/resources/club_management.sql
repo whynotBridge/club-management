@@ -59,7 +59,7 @@ CREATE TABLE Admin
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 );
 INSERT INTO Admin (username, password, email)
-VALUES ('admin', '123456', 'admin@example.com');
+VALUES ('admin', 'admin1234', 'admin@example.com');
 
 
 #社团表
@@ -340,3 +340,54 @@ VALUES (1, '篮球比赛圆满结束，各队伍展现了出色的团队合作�
        (5, '华农KPL活动吸引了众多电竞爱好者参与，活动现场气氛热烈。'),
        (6, '美术展览展出了社团成员的众多优秀作品，参观者对作品给予了高度评价。'),
        (7, '志愿者活动得到了社区的广泛支持，参与者共同努力为社区环境做出了贡献。');
+
+#获取我参加的活动信息
+DROP VIEW IF EXISTS my_activity_participation_view;
+CREATE VIEW my_activity_participation_view AS
+SELECT
+    u.user_id,
+    u.email,
+    a.activity_id,
+    a.theme,
+    a.description,
+    a.start_time AS activity_start_time,
+    a.end_time AS activity_end_time,
+    a.location,
+    ap.is_signed,
+    f.is_paid,
+    f.amount
+FROM
+    Activity_Participation ap
+        JOIN Activity a ON ap.activity_id = a.activity_id
+        JOIN Fee f ON ap.activity_id = f.activity_id AND ap.user_id = f.user_id
+        JOIN User u ON ap.user_id = u.user_id;
+
+#获取我的社团信息
+DROP VIEW IF EXISTS my_clubs_view;
+CREATE VIEW my_clubs_view AS
+SELECT
+    c.club_id,
+    c.club_name,
+    c.description,
+    c.contact_info,
+    c.activity_space,
+    m.user_id,
+    m.position
+FROM
+    Club c
+        LEFT JOIN Member m ON c.club_id = m.club_id;
+
+#获取我的社团成员信息
+DROP VIEW IF EXISTS my_club_members_view ;
+CREATE VIEW my_club_members_view AS
+SELECT
+    c.club_id,
+    u.username,
+    u.email,
+    c.club_name,
+    m.position,
+    m.join_date
+FROM
+    Member m
+        LEFT JOIN  Club c ON c.club_id = m.club_id
+        LEFT JOIN User u ON u.user_id = m.user_id;
