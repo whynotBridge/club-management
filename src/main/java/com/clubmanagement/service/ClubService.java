@@ -1,5 +1,6 @@
 package com.clubmanagement.service;
 
+import com.clubmanagement.commom.Result;
 import com.clubmanagement.model.dtos.QueryClubDTO;
 import com.clubmanagement.model.dtos.UpdateClubDTO;
 import com.clubmanagement.model.pojos.Club;
@@ -22,7 +23,7 @@ public interface ClubService {
      * @param clubId
      * @param updateClubDTO
      */
-    String updateClub(int clubId, UpdateClubDTO updateClubDTO);
+    Result<?> updateClub(int clubId, UpdateClubDTO updateClubDTO);
 
     int selectClubIdByPId(int userId);
 

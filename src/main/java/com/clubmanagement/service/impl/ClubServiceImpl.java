@@ -1,6 +1,7 @@
 package com.clubmanagement.service.impl;
 
 import com.clubmanagement.commom.Context;
+import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.ClubMapper;
 import com.clubmanagement.mapper.MemberMapper;
 import com.clubmanagement.model.dtos.QueryClubDTO;
@@ -73,7 +74,7 @@ public class ClubServiceImpl implements ClubService {
      * @param clubId
      * @param updateClubDTO
      */
-    public String updateClub(int clubId, UpdateClubDTO updateClubDTO){
+    public Result<?> updateClub(int clubId, UpdateClubDTO updateClubDTO){
         //1判断是不是社长
         //1.1获取登入用户id
         int userId=Context.getCurrentSession().getId();
@@ -81,7 +82,7 @@ public class ClubServiceImpl implements ClubService {
         int pId=clubMapper.getPIdById(clubId);
         //不是社长，不能修改
         if(userId!=pId)
-            return "您不是社长，无法修改社团信息！";
+            return Result.successMsg("您不是社长，无法修改社团信息！",new ArrayList<>());
 
         //构造id和基本信息
         Club club=Club.builder().clubId(clubId)
@@ -92,7 +93,7 @@ public class ClubServiceImpl implements ClubService {
 
         //修改数据库
         clubMapper.updateClub(club);
-        return "修改社团信息成功！";
+        return Result.success("修改社团信息成功！");
     }
 
     public int selectClubIdByPId(int userId){

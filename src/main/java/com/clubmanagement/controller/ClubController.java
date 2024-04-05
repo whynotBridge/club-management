@@ -52,7 +52,7 @@ public class ClubController {
     @PutMapping("/{clubId}")
     @ApiOperation("社长修改社团信息")
     public Result<?> updateClub(@PathVariable int clubId,@RequestBody UpdateClubDTO updateClubDTO) {
-        return Result.success(clubService.updateClub(clubId,updateClubDTO));
+        return clubService.updateClub(clubId,updateClubDTO);
     }
 
     @GetMapping("/myclub")
