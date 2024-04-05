@@ -55,7 +55,7 @@ public class ActivityController {
     public Result<?> getActivitiesByClubId(@PathVariable int clubId){
         List<Activity> activities=activityService.getActivitiesByClubId(clubId);
         if(activities==null || activities.size()==0)
-            return Result.fail("你的社团没有组织任何活动");
+            return Result.success("你的社团没有组织任何活动");
 
         return Result.success(activities);
     }
@@ -70,10 +70,10 @@ public class ActivityController {
 
     @GetMapping("/getMyParticipation/{clubId}")
     @ApiOperation("获取我参与的活动")
-    public Result<List<MyActivityParticipationDTO>> getMyParticipation(@PathVariable int clubId){
+    public Result<?> getMyParticipation(@PathVariable int clubId){
         List<MyActivityParticipationDTO> res=activityService.getMyParticipation(clubId);
         if(res==null)
-            return Result.fail("您暂无参加的活动！");
+            return Result.success("您暂无参加的活动！");
 
         return Result.success(res);
     }
@@ -150,7 +150,7 @@ public class ActivityController {
         //根据活动id获取所有未签到的成员信息
         List<ActivityParticipation> activityParticipations=activityParticipationMapper.getAllUnSignedByAId(activityId);
         if(activityParticipations==null || activityParticipations.size()==0)
-            return Result.fail("所有人都已经签到！");
+            return Result.success("所有人都已经签到！");
 
         return Result.success(activityParticipations);
     }

@@ -38,11 +38,11 @@ public class ClubController {
 
     @GetMapping
     @ApiOperation("获取所有社团信息")
-    public Result<List<QueryClubDTO>> getAllClubs() {
+    public Result<?> getAllClubs() {
         List<QueryClubDTO> clubs = clubService.getAllClubs();
 
         if(clubs == null || clubs.size() == 0)
-                return Result.fail("没有社团信息");
+                return Result.success("没有社团信息");
 
             return Result.success(clubs);
     }
@@ -56,10 +56,10 @@ public class ClubController {
 
     @GetMapping("/myclub")
     @ApiOperation("获取当前登录用户的社团信息")
-    public Result<List<QueryClubDTO>> getMyClub() {
+    public Result<?> getMyClub() {
         List<QueryClubDTO> myclubsDTO=clubService.getMyclub();
         if(myclubsDTO==null)
-            return Result.fail("您暂无加入任何社团");
+            return Result.success("您暂无加入任何社团");
         return Result.success(myclubsDTO);
     }
 
