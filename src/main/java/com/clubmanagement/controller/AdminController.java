@@ -78,7 +78,7 @@ public class AdminController {
     public Result<?> newClub(){
         List<QueryClubApplication> clubApplications=adminService.getAllApplyClubApplications();
         if(clubApplications.isEmpty())
-            return Result.success("没有待审核的社团注册");
+            return Result.successMsg("没有待审核的社团注册");
         return Result.success(clubApplications);
     }
 

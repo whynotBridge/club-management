@@ -42,7 +42,7 @@ public class ClubController {
         List<QueryClubDTO> clubs = clubService.getAllClubs();
 
         if(clubs == null || clubs.size() == 0)
-                return Result.success("没有社团信息");
+                return Result.successMsg("没有社团信息");
 
             return Result.success(clubs);
     }
@@ -59,7 +59,7 @@ public class ClubController {
     public Result<?> getMyClub() {
         List<QueryClubDTO> myclubsDTO=clubService.getMyclub();
         if(myclubsDTO==null)
-            return Result.success("您暂无加入任何社团");
+            return Result.successMsg("您暂无加入任何社团");
         return Result.success(myclubsDTO);
     }
 
