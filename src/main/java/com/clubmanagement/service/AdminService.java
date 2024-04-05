@@ -18,13 +18,6 @@ public interface AdminService {
 
 
     /**
-     * 根据id查询管理员信息
-     * @param adminId
-     * @return
-     */
-    Admin selectById(int adminId);
-
-    /**
      * 管理员同意社团申请
      * @param clubApplicationId
      */

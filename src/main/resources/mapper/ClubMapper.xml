@@ -4,6 +4,9 @@
     <update id="updateClub" parameterType="Club">
         update club
         <set>
+            <if test="clubName != null and clubName != ''">
+                club_name = #{clubName},
+            </if>
             <if test="description != null and description != ''">
                 description = #{description},
             </if>

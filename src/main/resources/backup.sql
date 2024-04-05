@@ -98,7 +98,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'admin','123456','admin@example.com','2024-04-04 07:34:48');
+INSERT INTO `admin` VALUES (1,'admin','admin1234','admin@example.com','2024-04-05 05:53:29');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +325,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'张三','zhangsan1234','zhangsan@example.com','2024-04-04 07:34:48'),(2,'李四','lisi1234','lisi@example.com','2024-04-04 07:34:48'),(3,'王五','wangwu1234','wangwu@example.com','2024-04-04 07:34:48'),(4,'小红','xiaohong1234','xiaohong@example.com','2024-04-04 07:34:48'),(5,'小明','xiaoming1234','xiaoming@example.com','2024-04-04 07:34:48'),(6,'小花','xiaohua1234','xiaohua@example.com','2024-04-04 07:34:48'),(7,'刘备','liubei1234','liubei@example.com','2024-04-04 07:34:48'),(8,'关羽','guanyu1234','guanyu@example.com','2024-04-04 07:34:48'),(9,'张飞','zhangfei1234','zhangfei@example.com','2024-04-04 07:34:48'),(10,'赵云','zhaoyun1234','zhaoyun@example.com','2024-04-04 07:34:48'),(11,'大乔','daqiao1234','daqiao@example.com','2024-04-04 07:34:48'),(12,'小乔','xiaoqiao1234','xiaoqiao@example.com','2024-04-04 07:34:48'),(13,'孙权','sunquan1234','sunquan@example.com','2024-04-04 07:34:48'),(14,'周瑜','zhouyu1234','zhouyu@example.com','2024-04-04 07:34:48'),(15,'诸葛亮','zhugeliang1234','zhugeliang@example.com','2024-04-04 07:34:48'),(16,'孙尚香','sunshangxiang1234','sunshangxiang@example.com','2024-04-04 07:34:48'),(17,'曹操','caocao1234','caocao@example.com','2024-04-04 07:34:48'),(18,'司马懿','simayi1234','simayi@example.com','2024-04-04 07:34:48'),(19,'貂蝉','diaochan1234','diaochan@example.com','2024-04-04 07:34:48'),(20,'周仓','zhoucang1234','zhoucang@example.com','2024-04-04 07:34:48'),(21,'马超','machao1234','machao@example.com','2024-04-04 07:34:48'),(22,'黄忠','huangzhong1234','huangzhong@example.com','2024-04-04 07:34:48'),(23,'孙坚','sunjian1234','sunjian@example.com','2024-04-04 07:34:48'),(24,'太史慈','taishici1234','taishici@example.com','2024-04-04 07:34:48'),(25,'张角','zhangjiao1234','zhangjiao@example.com','2024-04-04 07:34:48'),(26,'张宝','zhangbao1234','zhangbao@example.com','2024-04-04 07:34:48'),(27,'于吉','yuji1234','yuji@example.com','2024-04-04 07:34:48'),(28,'庞德','pangde1234','pangde@example.com','2024-04-04 07:34:48'),(29,'徐庶','xushu1234','xushu@example.com','2024-04-04 07:34:48');
+INSERT INTO `user` VALUES (1,'张三','zhangsan1234','zhangsan@example.com','2024-04-05 05:53:29'),(2,'李四','lisi1234','lisi@example.com','2024-04-05 05:53:29'),(3,'王五','wangwu1234','wangwu@example.com','2024-04-05 05:53:29'),(4,'小红','xiaohong1234','xiaohong@example.com','2024-04-05 05:53:29'),(5,'小明','xiaoming1234','xiaoming@example.com','2024-04-05 05:53:29'),(6,'小花','xiaohua1234','xiaohua@example.com','2024-04-05 05:53:29'),(7,'刘备','liubei1234','liubei@example.com','2024-04-05 05:53:29'),(8,'关羽','guanyu1234','guanyu@example.com','2024-04-05 05:53:29'),(9,'张飞','zhangfei1234','zhangfei@example.com','2024-04-05 05:53:29'),(10,'赵云','zhaoyun1234','zhaoyun@example.com','2024-04-05 05:53:29'),(11,'大乔','daqiao1234','daqiao@example.com','2024-04-05 05:53:29'),(12,'小乔','xiaoqiao1234','xiaoqiao@example.com','2024-04-05 05:53:29'),(13,'孙权','sunquan1234','sunquan@example.com','2024-04-05 05:53:29'),(14,'周瑜','zhouyu1234','zhouyu@example.com','2024-04-05 05:53:29'),(15,'诸葛亮','zhugeliang1234','zhugeliang@example.com','2024-04-05 05:53:29'),(16,'孙尚香','sunshangxiang1234','sunshangxiang@example.com','2024-04-05 05:53:29'),(17,'曹操','caocao1234','caocao@example.com','2024-04-05 05:53:29'),(18,'司马懿','simayi1234','simayi@example.com','2024-04-05 05:53:29'),(19,'貂蝉','diaochan1234','diaochan@example.com','2024-04-05 05:53:29'),(20,'周仓','zhoucang1234','zhoucang@example.com','2024-04-05 05:53:29'),(21,'马超','machao1234','machao@example.com','2024-04-05 05:53:29'),(22,'黄忠','huangzhong1234','huangzhong@example.com','2024-04-05 05:53:29'),(23,'孙坚','sunjian1234','sunjian@example.com','2024-04-05 05:53:29'),(24,'太史慈','taishici1234','taishici@example.com','2024-04-05 05:53:29'),(25,'张角','zhangjiao1234','zhangjiao@example.com','2024-04-05 05:53:29'),(26,'张宝','zhangbao1234','zhangbao@example.com','2024-04-05 05:53:29'),(27,'于吉','yuji1234','yuji@example.com','2024-04-05 05:53:29'),(28,'庞德','pangde1234','pangde@example.com','2024-04-05 05:53:29'),(29,'徐庶','xushu1234','xushu@example.com','2024-04-05 05:53:29');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -392,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-04 15:35:16
+-- Dump completed on 2024-04-05 13:53:35

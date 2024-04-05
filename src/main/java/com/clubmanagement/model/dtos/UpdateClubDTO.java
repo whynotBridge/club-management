@@ -15,4 +15,6 @@ public class UpdateClubDTO implements Serializable {
     private String contactInfo;
     @ApiModelProperty(value = "活动场地")
     private String activitySpace;
+    @ApiModelProperty(value = "社团名称")
+    private String clubName;
 }

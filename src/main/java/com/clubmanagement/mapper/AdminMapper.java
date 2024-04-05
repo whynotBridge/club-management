@@ -18,11 +18,4 @@ public interface AdminMapper {
     @Select("select * from admin where username = #{username} and password = #{password}")
     Admin login(String username, String password);
 
-    /**
-     * 根据主键查询
-     * @param adminId
-     * @return
-     */
-    @Select("select * from admin where admin_id = #{adminId}")
-    Admin selectById(int adminId);
 }

@@ -59,10 +59,6 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
-    public Admin selectById(int adminId){
-        return adminMapper.selectById(adminId);
-    }
-
     /**
      * 管理员获取社团注册
      */
@@ -113,14 +109,22 @@ public class AdminServiceImpl implements AdminService {
         clubApplication.setStatus(ApplyStatusEnum.agree);
         clubApplicationMapper.updateById(clubApplication);//先更新申请表中的状态
 
+        //获取旧的社长id
+        int[] clubId_old=clubMapper.getIdByPId(clubApplication.getPresidentId());
+        for(int i=0;i<clubId_old.length;i++){
+            System.out.println(clubId_old[i]);
+        }
         //插入社团表
         clubMapper.insert(club);
 
-        int clubId=clubMapper.getIdByPId(clubApplication.getPresidentId());
+        int[] clubId_new=clubMapper.getIdByPId(clubApplication.getPresidentId());
+        for(int i=0;i<clubId_new.length;i++){
+            System.out.println(clubId_new[i]);
+        }
         //将社长插入成员表
         Member member=new Member();
         member.setUserId(clubApplication.getPresidentId());
-        member.setClubId(clubId);
+        member.setClubId(clubId_new[clubId_new.length-1]);
         member.setPosition(PositionEnum.president);
         member.setJoinDate(LocalDateTime.now());
         memberMapper.joinClub(member);

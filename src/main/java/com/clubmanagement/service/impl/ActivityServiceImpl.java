@@ -41,15 +41,15 @@ public class ActivityServiceImpl implements ActivityService {
      * 社长发布活动
      * @param publishActivityDTO
      */
-    public void addActivity(PublishActivityDTO publishActivityDTO){
+    public void addActivity(int clubId,PublishActivityDTO publishActivityDTO){
         //拷贝发布活动信息
         Activity activity=new Activity();
         BeanUtils.copyProperties(publishActivityDTO,activity);
 
-        //根据session获得userId
-        int userId= Context.getCurrentSession().getId();
-        //根据社长id获取社团id
-        int clubId=clubMapper.getIdByPId(userId);
+//        //根据session获得userId
+//        int userId= Context.getCurrentSession().getId();
+//        //根据社长id获取社团id
+//        int clubId=clubMapper.getIdByPId(userId);
         //设置活动所属社团
         activity.setClubId(clubId);
         activityMapper.addActivity(activity);
@@ -57,14 +57,6 @@ public class ActivityServiceImpl implements ActivityService {
 
     public List<Activity> getActivitiesByClubId(int clubId){
         return activityMapper.getActivitiesByClubId(clubId);
-    }
-
-    public double getAmountByActivityId(int activityId){
-        return activityMapper.getAmountByActivityId(activityId);
-    }
-
-    public Activity getActivityById(int activityId){
-        return activityMapper.getById(activityId);
     }
 
     /**

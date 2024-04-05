@@ -61,9 +61,6 @@ public class ClubServiceImpl implements ClubService {
         return res;
     }
 
-    public Club selectClubByPId(int userId){
-        return clubMapper.selectClubByPId(userId);
-    }
 
     public Club getById(int clubId){
         return clubMapper.getById(clubId);
@@ -89,6 +86,7 @@ public class ClubServiceImpl implements ClubService {
                 .description(updateClubDTO.getDescription())
                 .contactInfo(updateClubDTO.getContactInfo())
                 .activitySpace(updateClubDTO.getActivitySpace())
+                .clubName(updateClubDTO.getClubName())
                 .build();
 
         //修改数据库
@@ -96,9 +94,6 @@ public class ClubServiceImpl implements ClubService {
         return Result.success("修改社团信息成功！");
     }
 
-    public int selectClubIdByPId(int userId){
-        return clubMapper.getIdByPId(userId);
-    }
 
     public void insert(Club club){
         clubMapper.insert(club);
@@ -138,4 +133,5 @@ public class ClubServiceImpl implements ClubService {
 
         return res;
     }
+
 }

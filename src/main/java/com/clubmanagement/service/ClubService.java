@@ -14,8 +14,6 @@ public interface ClubService {
      */
     List<QueryClubDTO> getAllClubs();
 
-    Club selectClubByPId(int userId);
-
     Club getById(int clubId);
 
     /**
@@ -25,8 +23,6 @@ public interface ClubService {
      */
     Result<?> updateClub(int clubId, UpdateClubDTO updateClubDTO);
 
-    int selectClubIdByPId(int userId);
-
     void insert(Club club);
 
     /**
@@ -34,4 +30,5 @@ public interface ClubService {
      * @return
      */
     List<QueryClubDTO> getMyclub();
+
 }

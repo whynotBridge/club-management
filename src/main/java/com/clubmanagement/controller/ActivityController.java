@@ -3,8 +3,6 @@ package com.clubmanagement.controller;
 import com.clubmanagement.commom.Context;
 import com.clubmanagement.commom.Result;
 import com.clubmanagement.mapper.ActivityParticipationMapper;
-import com.clubmanagement.mapper.ClubMapper;
-import com.clubmanagement.mapper.UserMapper;
 import com.clubmanagement.model.dtos.ActivityParticipationDTO;
 import com.clubmanagement.model.dtos.MyActivityParticipationDTO;
 import com.clubmanagement.model.dtos.PublishActivityDTO;
@@ -13,7 +11,6 @@ import com.clubmanagement.model.pojos.ActivityParticipation;
 import com.clubmanagement.model.pojos.Fee;
 import com.clubmanagement.model.pojos.User;
 import com.clubmanagement.service.ActivityService;
-import com.clubmanagement.service.ClubService;
 import com.clubmanagement.service.FeeService;
 import com.clubmanagement.service.UserService;
 import io.swagger.annotations.Api;
@@ -42,11 +39,11 @@ public class ActivityController {
     @Autowired
     ActivityService activityService;
 
-    @PostMapping
+    @PostMapping("{clubId}")
     @ApiOperation("社长发布活动")
-    public Result<?> addActivity(@RequestBody PublishActivityDTO publishActivityDTO){
+    public Result<?> addActivity(@PathVariable int clubId,@RequestBody PublishActivityDTO publishActivityDTO){
 
-        activityService.addActivity(publishActivityDTO);
+        activityService.addActivity(clubId,publishActivityDTO);
         return Result.success("发布活动成功");
     }
 

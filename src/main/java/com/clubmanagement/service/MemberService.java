@@ -41,11 +41,4 @@ public interface MemberService {
      */
     void deleteQuitMembers();
 
-    int[] getClubIdByUserId(int userid);
-
-    int getMemberIdByUserId(int userId);
-
-
-
-//    int getOnlyClubIdByUId(int userId, PositionEnum position);
 }

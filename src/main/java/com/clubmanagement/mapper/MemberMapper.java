@@ -47,32 +47,6 @@ public interface MemberMapper {
     void deleteQuitMembers();
 
     /**
-     * 根据用户id查询其加入的所有社团id
-     * @param userid
-     * @return
-     */
-    @Select("select distinct club_id from member where user_id = #{userid}")
-    int[] getClubIdByUserId(int userid);
-
-    /**
-     * 根据userId获取memberId
-     * @param userId
-     * @return
-     */
-    @Select("select member_id from member where user_id = #{userId}")
-    int getMemberIdByUserId(int userId);
-
-    /**
-     * 根据用户id和在团状态获取社团id
-     * @param userId
-     * @param position
-     * @return
-     */
-    @Select("select club_id from member where user_id = #{userId} and position = #{position}")
-    int[] getOnlyClubIdByUId(int userId, PositionEnum position);
-
-
-    /**
      * 根据用户id和社团id获得成员信息
      * @param userId
      * @param clubId

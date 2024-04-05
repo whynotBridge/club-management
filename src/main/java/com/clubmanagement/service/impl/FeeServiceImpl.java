@@ -13,9 +13,6 @@ public class FeeServiceImpl implements FeeService {
     @Autowired
     FeeMapper feeMapper;
 
-    public void addFee(int activityId, int userId, double amount,boolean isPaid){
-        feeMapper.addFee(activityId, userId, amount, isPaid);
-    }
 
     /**
      * 根据用户id和活动id缴费

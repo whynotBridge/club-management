@@ -18,14 +18,6 @@ public interface ClubMapper {
     @Select("select * from club")
     List<Club> getAllClubs();
 
-    /**
-     * 根据社长id查询信息
-     * @param userId
-     * @return
-     */
-    @Select("select * from club where president_id = #{userId}")
-    Club selectClubByPId(int userId);
-
 
     /**
      * 根据用户id查询社团id //todo 二级索引，覆盖
@@ -33,7 +25,7 @@ public interface ClubMapper {
      * @return
      */
     @Select("select club_id from club where president_id = #{userId}")
-    int getIdByPId(int userId);
+    int[] getIdByPId(int userId);
 
     /**
      * 根据主键查询
@@ -63,4 +55,5 @@ public interface ClubMapper {
      */
     @Select("select president_id from club where club_id = #{clubId}")
     int getPIdById(int clubId);
+
 }

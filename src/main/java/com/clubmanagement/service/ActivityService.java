@@ -10,15 +10,11 @@ public interface ActivityService {
 
     /**
      * 社长发布活动
-     * @param publishActivityDTO
+     * @param clubId,publishActivityDTO
      */
-    void addActivity(PublishActivityDTO publishActivityDTO);
+    void addActivity(int clubId,PublishActivityDTO publishActivityDTO);
 
     List<Activity> getActivitiesByClubId(int clubId);
-
-    double getAmountByActivityId(int activityId);
-
-    Activity getActivityById(int activityId);
 
     /**
      * 根据社团id获取登入用户参加该社团活动的信息

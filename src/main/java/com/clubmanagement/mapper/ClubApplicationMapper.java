@@ -42,10 +42,5 @@ public interface ClubApplicationMapper {
     @Update("update club_application set status = #{status} where application_id = #{applicationId}")
     void updateById(ClubApplication clubApplication);
 
-    /**
-     * 根据主键删除数据
-     * @param clubApplicationId
-     */
-    @Delete("delete from club_application where application_id = #{clubApplicationId}")
-    void deleteById(int clubApplicationId);
+
 }

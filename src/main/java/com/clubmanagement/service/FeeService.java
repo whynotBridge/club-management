@@ -5,8 +5,6 @@ import com.clubmanagement.model.pojos.Fee;
 
 public interface FeeService {
 
-    void addFee(int activityId, int userId, double amount, boolean isPaid);
-
     /**
      * 根据用户id和活动id缴费
      * @param activityId
