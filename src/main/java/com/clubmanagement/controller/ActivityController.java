@@ -117,7 +117,7 @@ public class ActivityController {
         //根据活动id获取活动参与表信息
         List<ActivityParticipation> activityParticipations=activityParticipationMapper.getByAId(activityId);
         if(activityParticipations==null || activityParticipations.size()==0)
-            return Result.fail("没有人参加该活动");
+            return Result.success("没有人参加该活动");
 
         List<ActivityParticipationDTO> res=new ArrayList<>();
         //遍历参与表信息，拼接返回信息
